@@ -1,27 +1,14 @@
-import cv2
+import create_frames
+import label_images
 import os
 
-# Create a directory to store frames
-video_name = ['IceHockey', 'GirlsHockey']
-video_path = ['../data/videos/Hockey0.mp4', '../data/videos/Hockey1.mp4-.mp4']
 
-for i in range(len(video_path)):
-    output_dir = f'../data/{video_name[i]}_extracted_frames'
-    os.makedirs(output_dir, exist_ok=True)
+if __name__ == '__main__':
+    # Check if data is available
+    if os.path.exists('../data') and os.path.exists('../data/videos') and len(os.listdir('../data')) - 1 != len(os.listdir('../data/videos'))*2:
+        print('Data is not available. Extracting data from videos...')
+        file_names  = create_frames.create_frames()
 
-    # Open the video
-    cap = cv2.VideoCapture(video_path[i])
-    frame_count = 0
+        # print('Creating labels...')
+        # label_images.label_images(file_names)
 
-    # Extract frames
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # Save frame as image
-        cv2.imwrite(f"{output_dir}/frame_{frame_count}.jpg", frame)
-        frame_count += 1
-
-    cap.release()
-    print(f"Extracted {frame_count} frames.")
