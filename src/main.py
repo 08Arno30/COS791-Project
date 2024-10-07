@@ -3,10 +3,10 @@ import os
 
 # Create a directory to store frames
 video_name = ['IceHockey', 'GirlsHockey']
-video_path = ['./videos/Hockey0.mp4', './videos/Hockey1.mp4-.mp4']
+video_path = ['../data/videos/Hockey0.mp4', '../data/videos/Hockey1.mp4-.mp4']
 
 for i in range(len(video_path)):
-    output_dir = f'{video_name[i]}_extracted_frames'
+    output_dir = f'../data/{video_name[i]}_extracted_frames'
     os.makedirs(output_dir, exist_ok=True)
 
     # Open the video
