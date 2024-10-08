@@ -30,8 +30,19 @@ def label_images(file_names):
 
         print(f"Labeling frames in {frames_dir}...")
 
+        # sort the frame names according the sequence
+        frame_names = sorted(os.listdir(frames_dir), key=lambda x: int(x.split('.')[0].split('_')[1]))
+
         # Loop over the extracted frames and label them
-        for frame_name in os.listdir(frames_dir):
+        for i, frame_name in enumerate(frame_names):
+            # check if there is already a label for this image
+            if os.path.exists(os.path.join(labels_dir, frame_name.replace('.jpg', '.txt'))):
+                continue
+            print(f"Labeling frame {i+1}/{len(frame_names)}...")
+            # create empty txt file for frame
+            with open(os.path.join(labels_dir, frame_name.replace('.jpg', '.txt')), 'w') as f:
+                pass
+
             if frame_name.endswith('.jpg'):
                 frame_path = os.path.join(frames_dir, frame_name)
 
@@ -40,6 +51,20 @@ def label_images(file_names):
 
                 # Use cv2.selectROI to select the ball (puck) region
                 bbox = cv2.selectROI("Select ROI", img, showCrosshair=True)
+
+                satisfied = False
+
+                # prompt user to confirm selection or redo selection
+                while not satisfied:
+                    user_input = input("Are you satisfied with the selection? (y/n): ")
+
+                    if user_input.lower() == 'y':
+                        satisfied = True
+                    elif user_input.lower() == 'n':
+                        satisfied = False
+                        # Redo selection
+                        cv2.destroyWindow("Select ROI")
+                        bbox = cv2.selectROI("Select ROI", img, showCrosshair=True)
 
                 # If a bounding box is selected (non-zero width and height)
                 if bbox[2] > 0 and bbox[3] > 0:
