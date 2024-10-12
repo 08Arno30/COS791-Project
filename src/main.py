@@ -1,3 +1,7 @@
+# ======================================================================
+# This file is only used to convert the video into frames and label them
+# ======================================================================
+
 import create_frames
 import label_images
 import os

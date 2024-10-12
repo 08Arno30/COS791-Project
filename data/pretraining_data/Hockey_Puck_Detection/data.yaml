@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['puck']
+
+roboflow:
+  workspace: eecs-442-e9w8v
+  project: hockey-puck-detection-tgalg
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/eecs-442-e9w8v/hockey-puck-detection-tgalg/dataset/2

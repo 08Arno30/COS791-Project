@@ -1,0 +1,19 @@
+precision: 0.946634
+recall: 0.662447
+mAP50: 0.767909
+
+parameters:
+optimizer=Adam
+lr=0.0002
+momentum=0.9
+
+epochs=150
+batch_size=32
+img_size=640
+
+
+Albumentations:
+-Blur(p=0.01, blur_limit=(3, 7))
+-MedianBlur(p=0.01, blur_limit=(3, 7))
+-ToGray(p=0.01, num_output_channels=3, method='weighted_average')
+-CLAHE(p=0.01, clip_limit=(1, 0.4), tile_grid_size=(8, 8))
