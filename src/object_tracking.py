@@ -2,7 +2,6 @@ import os
 import cv2
 import numpy as np
 from ultralytics import YOLO
-from deep_sort_realtime.deepsort_tracker import DeepSort  # Import DeepSort from deep_sort_realtime
 
 video_names = ['Hockey0.mp4', 'Hockey1.mp4-.mp4']
 selected_index = 1
@@ -31,18 +30,38 @@ while cap.isOpened():
         # Run YOLO11 tracking on the frame, persisting tracks between frames
         results = model.track(frame, persist=True)
 
-        # Visualize the results on the frame
-        annotated_frame = results[0].plot()
+        for result in results:
+            # Iterate over the detected objects
+            for box in result.boxes:
+                # Extract box coordinates and class id
+                x1, y1, x2, y2 = map(int, box.xyxy[0])  # xyxy format of bounding box
 
-        # save annotated_frame to a folder
-        cv2.imwrite('../data/output_videos/frame_' + str(int(cap.get(cv2.CAP_PROP_POS_FRAMES))) + '.jpg', annotated_frame)
+                # Enlarge the bounding box by 20% (or other desired scale)
+                width = x2 - x1
+                height = y2 - y1
+                scale_factor = 1.2
+                new_width = int(width * scale_factor)
+                new_height = int(height * scale_factor)
+
+                # Recalculate the new bounding box coordinates, keeping it centered
+                x1_new = max(0, x1 - (new_width - width) // 2)
+                y1_new = max(0, y1 - (new_height - height) // 2)
+                x2_new = min(frame.shape[1], x1_new + new_width)
+                y2_new = min(frame.shape[0], y1_new + new_height)
+
+                # Draw the enlarged bounding box with a new color (e.g., red)
+                cv2.rectangle(frame, (x1_new, y1_new), (x2_new, y2_new), (0, 165, 255), 2)  # Red color
+                cv2.putText(frame, f"{'ball' if selected_index==1 else 'puck'}", (x1_new, y1_new - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 165, 255), 2)
 
         # Display the annotated frame
-        # cv2.imshow("YOLO11 Tracking", annotated_frame)
+        cv2.imshow("YOLO11 Tracking", frame)
 
+        # save annotated_frame to a folder
+        cv2.imwrite('../data/output_videos/frame_' + str(int(cap.get(cv2.CAP_PROP_POS_FRAMES))) + '.jpg', frame)
+        
         # Break the loop if 'q' is pressed
-        # if cv2.waitKey(1) & 0xFF == ord("q"):
-        #     break
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
     else:
         # Break the loop if the end of the video is reached
         break
