@@ -1,5 +1,5 @@
 # COS791-Project
-In this project we implemented an Object Tracking algorithm by using a pre-trained YOLOv8 model and fine-tuning it on a few datasets, including a dataset that we had to manually label. Afterwards, we used the fine-tuned model to make predictions on detecting the hockey ball/puck in the two provided videos. Finally, we used the predicted boundary box's coordinates together with the built-in track method to track the object throughout the video. The two output videos are shown below in the [Output Section](https://github.com/08Arno30/COS791-Project/edit/main/README.md#output)
+In this project we implemented an Object Tracking algorithm by using a pre-trained YOLOv8 model and fine-tuning it on a few datasets, including a dataset that we had to manually label. Afterwards, we used the fine-tuned model to make predictions on detecting the hockey ball/puck in the two provided videos. Finally, we used the predicted boundary box's coordinates together with the built-in track method to track the object throughout the video.
 
 ### Environment Setup
 1. Clone the Repository
