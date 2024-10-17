@@ -13,6 +13,6 @@ if __name__ == '__main__':
         print('Data is not available. Extracting data from videos...')
         file_names  = create_frames.create_frames()
 
-        # print('Creating labels...')
-        # label_images.label_images(file_names)
+        print('Creating labels...')
+        label_images.label_images(file_names)
 
