@@ -13,6 +13,7 @@ In this project we implemented an Object Tracking algorithm by using a pre-train
 5. When you are done, deactivate the virtual environment by running the command `deactivate`.
 
 ### Output Videos
+Note the video links below were created by [Screenpal](https://go.screenpal.com) merely for demonstration purposes. ***The output videos were still created by our program.***
 
 1. [Ice Hockey video](https://go.screenpal.com/watch/cZ6FirVWJMV)
 
