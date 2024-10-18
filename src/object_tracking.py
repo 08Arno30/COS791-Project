@@ -4,6 +4,7 @@ import numpy as np
 from ultralytics import YOLO
 
 video_names = ['Hockey0.mp4', 'Hockey1.mp4-.mp4']
+colours = [(230, 0, 255), (0, 255, 94)]
 selected_index = 1
 selected_video = video_names[selected_index]
 
@@ -39,7 +40,7 @@ while cap.isOpened():
                 # Enlarge the bounding box by 20% (or other desired scale)
                 width = x2 - x1
                 height = y2 - y1
-                scale_factor = 1.2
+                scale_factor = 1.5
                 new_width = int(width * scale_factor)
                 new_height = int(height * scale_factor)
 
@@ -50,8 +51,8 @@ while cap.isOpened():
                 y2_new = min(frame.shape[0], y1_new + new_height)
 
                 # Draw the enlarged bounding box with a new color (e.g., red)
-                cv2.rectangle(frame, (x1_new, y1_new), (x2_new, y2_new), (0, 165, 255), 2)  # Red color
-                cv2.putText(frame, f"{'ball' if selected_index==1 else 'puck'}", (x1_new, y1_new - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 165, 255), 2)
+                cv2.rectangle(frame, (x1_new, y1_new), (x2_new, y2_new), colours[selected_index], 3)
+                cv2.putText(frame, f"{'ball' if selected_index==1 else 'puck'}", (x1_new, y1_new - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, colours[selected_index], 3)
 
         # Display the annotated frame
         cv2.imshow("YOLO11 Tracking", frame)
